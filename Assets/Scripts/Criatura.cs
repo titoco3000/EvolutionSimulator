@@ -15,35 +15,46 @@ public class Criatura : MonoBehaviour
 {
     public DNA Genes;
 
-    //para a locomoção
-    private NavMeshAgent agent;
 
     public int FoodAmount = 0;
     public int Generation = 1;
 
-    public bool IndisponivelParaNamoro = true;
-    public bool Apaixonado = false;
-    public bool Passivo = false;
-
-    private int VagarDistancia = 10;
-    private float distanciaMinimaParaInteragir = 1.2f;
 
     private string TargetType;
-    Transform TargetTransform;
+    private Transform TargetTransform;
 
-    //parâmetros para a visão
+    //Referências
     public LayerMask criaturaLayer;
     public LayerMask comidaLayer;
 
     //Configurações
+    private int InitialFood = 500;
+    private int MaxFoodAmount = 2000;
     public float descansoPosBebe = 10f;
     public float tempoDeInfancia = 12f;
     public float QualidadeDaVisao = 0.2f;
-    private int CustoDeAcasalamento = 10;
+    private int CustoDeAcasalamento = 2;
+    private int MinFoodParaAcasalar = 60;
     public float maxTempoDeNamoro = 10f;
+    private int VagarDistancia = 10;
+    private float distanciaMinimaParaInteragir = 1.2f;
+    public float TempoDeVida = 40f;
+    public string nomeDoPrefab = "Criatura Filhote";
+    public string nomeDaCriatura = "Criatura";
+
     //prefabs
     private GameObject prefabDoFilho;
 
+    //Referencia a componentes
+    private NavMeshAgent agent;
+    private ParticleSystem LoveParticles;
+
+    //para a reprodução
+    [HideInInspector]public bool IndisponivelParaNamoro = true;
+    [HideInInspector] public bool Apaixonado = false;
+    [HideInInspector] public bool Passivo = false;
+
+    [HideInInspector] public float BirthTime;
 
     private void Start()
     {
@@ -51,10 +62,12 @@ public class Criatura : MonoBehaviour
         if(Genes.Velocidade == 0)
         {
             Genes = new DNA();
-            Genes.SetRandomGenes();
-            //Genes.SetDefaultGenes();
-            FoodAmount = 2000; //valor inicial padrão
-            //Invoke("VoltarAoRomance", 3f);
+
+            //duas opções de inicialização dos genes:
+            //Genes.SetRandomGenes();
+            Genes.SetDefaultGenes();
+            
+            FoodAmount = InitialFood; //valor inicial 
             TornarseAdulto();
         }
         //ativa qnd NÃO é a primeira geração
@@ -64,30 +77,35 @@ public class Criatura : MonoBehaviour
             Invoke("TornarseAdulto", tempoDeInfancia);
         }
         
-        //referencia a scripts
-        agent = GetComponent<NavMeshAgent>();
 
-        //referencia a resources
-        prefabDoFilho = Resources.Load("Criatura Filhote") as GameObject;
+        //referencias
+        prefabDoFilho = Resources.Load(nomeDoPrefab) as GameObject;
+        agent = GetComponent<NavMeshAgent>();
+        LoveParticles = GetComponentInChildren<ParticleSystem>();
 
         //configurações iniciais
         SetColor(Genes.Red, Genes.Green, Genes.Blue);
         agent.speed = agent.speed * (float)Genes.Velocidade / 100f;
+        BirthTime = Time.time;
 
         //primeiro pensamento
-        Invoke("Pensar", 2f);
+        Invoke("Pensar", 2 + ((100 - Genes.Inteligencia) / 10));
+
+        //morte por velhice
+        //int saudeMultiplier = Genes.Saude / 10 >= 1 ? Genes.Saude / 10 : 1;
+        Invoke("MorrerDeVelhice", TempoDeVida * Genes.Saude );
     }
 
     private void Update()
     {
         if (TargetTransform != null)
         {
-
-            if (Vector3.Distance(transform.position, TargetTransform.position) <= distanciaMinimaParaInteragir)
+            float distanceToTarget = Vector3.Distance(transform.position, TargetTransform.position);
+            if ( distanceToTarget <= distanciaMinimaParaInteragir)
             {
                 //para em frente ao target
                 agent.SetDestination(transform.position);
-                //encara ele
+                //interage com ele
                 if (TargetType == "Comida")
                 {
                     TargetTransform.GetComponent<Comida>().Comer(this);
@@ -97,18 +115,25 @@ public class Criatura : MonoBehaviour
                     TerFilho(TargetTransform.GetComponent<Criatura>());
                 }
             }
-            else if(TargetType == "Parceiro")
+            else
             {
-                //nesse caso é feito no update pq o alvo se mexe
-                agent.SetDestination(TargetTransform.position);
+                if(TargetType == "Parceiro"&&distanceToTarget <= distanciaMinimaParaInteragir * 2 && Passivo)
+                {
+                    //se é o passivo, parar a uma distancia maior
+                     agent.SetDestination(transform.position);
+                }
+                else
+                {
+                    agent.SetDestination(TargetTransform.position);
+                }
             }
         }
         else {
+            //garante que não fique apaixonado depois do fim do relacionamento
             if (Apaixonado)
             {
                 Apaixonado = false;
                 Passivo = false;
-                Debug.Log("parando de vagabundar");
             }
         }
     }
@@ -127,7 +152,7 @@ public class Criatura : MonoBehaviour
         {
             //cobrar o preço energético
             GastarComida(Genes.GetCost());
-            FoodAmount -= Genes.GetCost();
+            //FoodAmount -= Genes.GetCost();
 
             TargetTransform = null;
             //se tiver comida o suficiente, procurar parceiro
@@ -145,20 +170,22 @@ public class Criatura : MonoBehaviour
                         //andar até ele
                         TargetTransform = parceiroT;
                         TargetType = "Parceiro";
+                        //emitir corações
+                        LoveParticles.Play();
                     }
                 }
             }
+
             //se não tiver comida suficiente ou não achar parceiro, procurar comida
-            if (!Apaixonado)
+            if ( FoodAmount < MaxFoodAmount && !Apaixonado)
             {
                 Transform comidaT = SearchFor("Comida", Genes.Visao);
                 if(comidaT != null)
                 {
                     //achou comida!
                     Comida comida = comidaT.GetComponent<Comida>();
-                    if(comida.QuemEstaComendo == null)
+                    if(comida.Comido == false)
                     {
-                        comida.QuemEstaComendo = transform;
                         TargetTransform = comidaT;
                         TargetType = "Comida";
 
@@ -208,9 +235,20 @@ public class Criatura : MonoBehaviour
         if(FoodAmount <= 0)
         {
             //Debug.Log(transform.name + " morreu de fome");
-            Destroy(gameObject);
-            this.enabled = false;
+            Morrer();
         }
+    }
+
+
+    void MorrerDeVelhice()
+    {
+        //Debug.Log("morri de velhice");
+        Morrer();
+    }
+    void Morrer()
+    {
+        Destroy(gameObject);
+        this.enabled = false;
     }
 
     //retorna parceiro ou comida válidos
@@ -226,14 +264,14 @@ public class Criatura : MonoBehaviour
         {
             if(procura == "Comida")
             {
-                if(item.GetComponent<Comida>().QuemEstaComendo != transform)
+                if(item.GetComponent<Comida>().Comido == false)
                 {
                     itemsQuePodem.Add(item.transform);
                 }
             }
             else
             {
-                if(item.GetComponent<Criatura>().PodeReproduzir() && item.transform != transform)
+                if(item.GetComponent<Criatura>().PodeReproduzir() && item.GetComponent<Criatura>().enabled && item.transform != transform)
                 {
                     itemsQuePodem.Add(item.transform);
                 }
@@ -265,6 +303,8 @@ public class Criatura : MonoBehaviour
             TargetTransform = noivo;
             Apaixonado = true;
             Passivo = true;
+            //emitir corações
+            LoveParticles.Play();
             return true;
         }
         return false;
@@ -272,7 +312,7 @@ public class Criatura : MonoBehaviour
 
     public bool PodeReproduzir()
     {
-        bool retorno = !Apaixonado && !IndisponivelParaNamoro && Genes.VontadeDeAcasalamento * CustoDeAcasalamento < FoodAmount;
+        bool retorno = !Apaixonado && !IndisponivelParaNamoro && distanciaMinimaParaInteragir+ (100 - Genes.VontadeDeAcasalamento) * CustoDeAcasalamento < FoodAmount*2;
         return retorno;
     }
 
@@ -280,17 +320,16 @@ public class Criatura : MonoBehaviour
     private void TerFilho(Criatura outro)
     {
         //deduzir comida 
-        GastarComida(Genes.VontadeDeAcasalamento * CustoDeAcasalamento / 2);
-        //FoodAmount -= Genes.VontadeDeAcasalamento / 2;
-        outro.GastarComida(outro.Genes.VontadeDeAcasalamento * CustoDeAcasalamento / 2);
-        //outro.FoodAmount -= outro.Genes.VontadeDeAcasalamento / 2;
+        GastarComida( MinFoodParaAcasalar+ (100 - Genes.VontadeDeAcasalamento) * CustoDeAcasalamento);
+        outro.GastarComida(MinFoodParaAcasalar +(100 - outro.Genes.VontadeDeAcasalamento) * CustoDeAcasalamento);
 
         
         DNA dnaDoFilho = new DNA(outro.Genes.ToArray(), Genes.ToArray());
         Criatura filho = Instantiate(prefabDoFilho, transform.position, transform.rotation, transform.parent).GetComponent<Criatura>();
+        filho.transform.localScale = Vector3.one * 0.5f;
         filho.Genes = dnaDoFilho;
         filho.Generation += Generation > outro.Generation ? Generation : outro.Generation;
-        filho.FoodAmount = Genes.VontadeDeAcasalamento * CustoDeAcasalamento / 2 + outro.Genes.VontadeDeAcasalamento * CustoDeAcasalamento / 2;
+        filho.FoodAmount = 2*MinFoodParaAcasalar +(100 - Genes.VontadeDeAcasalamento) * CustoDeAcasalamento + (100 - outro.Genes.VontadeDeAcasalamento) * CustoDeAcasalamento;
 
         //tira os pais do modo apaixonado
         Apaixonado = false;
@@ -322,7 +361,7 @@ public class Criatura : MonoBehaviour
     }
     IEnumerator Crescer(float novoTamanho)
     {
-        transform.name = "Criatura";
+        transform.name = nomeDaCriatura;
         float growRate = 0.5f;
         while(transform.localScale.x < novoTamanho)
         {
@@ -334,10 +373,9 @@ public class Criatura : MonoBehaviour
             transform.localScale = newScale;
             yield return new WaitForEndOfFrame();
         }
-        if(transform.localScale.x < novoTamanho)
-        {
-            transform.localScale = Vector3.one * novoTamanho;
-        }
+        
+         transform.localScale = Vector3.one * novoTamanho;
+        
     }
 
 

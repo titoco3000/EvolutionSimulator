@@ -2,21 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using UnityEngine.SceneManagement;
+
 
 public class SaveHandler : MonoBehaviour
 {
-    public Transform Parent;
+    public Transform ParentCriaturas;
+    public Transform ParentPredadores;
+
     public int MeasureDelay = 10;
     public int MaxGraphDots = 41;
 
-    private string Path;
-    private string PathOfBest;
+    private string Path_historico;
+    private string Path_historicoBest;
 
 
     void Start()
     {
-        Path = Application.dataPath + "/CurrentHistorico.json";
-        PathOfBest = Application.dataPath + "/BestHistorico.json";
+        Path_historico = Application.dataPath + "/historico.json";
+        Path_historicoBest = Application.dataPath + "/historicoBest.json";
+
         Invoke("IniciarJson", .1f);
         Invoke("UpdateHistorico",MeasureDelay);
     }
@@ -28,11 +33,11 @@ public class SaveHandler : MonoBehaviour
 
     public void SetBestHistorico()
     {
-        Population bestHistorico = JsonUtility.FromJson<Population>(File.ReadAllText(PathOfBest));
-        Population currentHistorico = JsonUtility.FromJson<Population>(File.ReadAllText(Path));
+        Population bestHistorico = JsonUtility.FromJson<Population>(File.ReadAllText(Path_historicoBest));
+        Population currentHistorico = JsonUtility.FromJson<Population>(File.ReadAllText(Path_historico));
         if (TamanhoDoHistorico(bestHistorico) * bestHistorico.EscalaDeTempo < TamanhoDoHistorico(currentHistorico) * currentHistorico.EscalaDeTempo)
         {
-            SetJson(currentHistorico, PathOfBest);
+            SetJson(currentHistorico, Path_historicoBest);
         }
     }
 
@@ -41,14 +46,19 @@ public class SaveHandler : MonoBehaviour
         Population populacao = new Population();
         List<Population.Generation> Geracoes = new List<Population.Generation>();
 
-        Geracoes.Add(GetCurrentGenerationMedians());
-        populacao.lista = Geracoes;
+        Geracoes.Add(GetCurrentGenerationMedians(ParentCriaturas));
+        populacao.listaCriaturas = Geracoes;
+
+        Geracoes = new List<Population.Generation>();
+        Geracoes.Add(GetCurrentGenerationMedians(ParentPredadores));
+        populacao.listaPredadores = Geracoes;
+
         populacao.EscalaDeTempo = MeasureDelay;
-        SetJson(populacao, Path);
+        SetJson(populacao, Path_historico);
         //garante q os arquivo Best existe
-        if (!File.Exists(PathOfBest))
+        if (!File.Exists(Path_historicoBest))
         {
-            SetJson(populacao, PathOfBest);
+            SetJson(populacao, Path_historicoBest);
         }
     }
 
@@ -59,10 +69,11 @@ public class SaveHandler : MonoBehaviour
         File.WriteAllText(path, json);
 
     }
-    void AddToJson(Population.Generation Geracao)
+    void AddToJson(Population.Generation GeracaoCriaturas, Population.Generation GeracaoPredadores )
     {
-        Population populacao = JsonUtility.FromJson<Population>(File.ReadAllText(Path));
-        populacao.lista.Add(Geracao);
+        Population populacao = JsonUtility.FromJson<Population>(File.ReadAllText(Path_historico));
+        populacao.listaCriaturas.Add(GeracaoCriaturas);
+        populacao.listaPredadores.Add(GeracaoPredadores);
 
         if(TamanhoDoHistorico(populacao) >= MaxGraphDots)
         {
@@ -72,7 +83,7 @@ public class SaveHandler : MonoBehaviour
             populacao.EscalaDeTempo = MeasureDelay;
         }
 
-        File.WriteAllText(Path, JsonUtility.ToJson(populacao));
+        File.WriteAllText(Path_historico, JsonUtility.ToJson(populacao));
         
     }
 
@@ -80,14 +91,14 @@ public class SaveHandler : MonoBehaviour
     {
         if (id == 0)
         {
-            return JsonUtility.FromJson<Population>(File.ReadAllText(Path));
+            return JsonUtility.FromJson<Population>(File.ReadAllText(Path_historico));
         }
-        return JsonUtility.FromJson<Population>(File.ReadAllText(PathOfBest));
+        return JsonUtility.FromJson<Population>(File.ReadAllText(Path_historicoBest));
     }
 
     public Population SimplifyInHalf(Population original)
     {
-        if (original.lista.Count % 2 == 0)
+        if (original.listaCriaturas.Count % 2 == 0)
         {
             Debug.LogError("even number");
             return original;
@@ -95,13 +106,21 @@ public class SaveHandler : MonoBehaviour
         else
         {
             Population retorno = new Population();
-            retorno.lista = new List<Population.Generation>();
-            retorno.lista.Add(original.lista[0]);
-            for (int i = 1; i+1 < original.lista.Count; i += 2)
+
+            retorno.listaCriaturas = new List<Population.Generation>();
+            retorno.listaCriaturas.Add(original.listaCriaturas[0]);
+            for (int i = 1; i + 1 < original.listaCriaturas.Count; i += 2)
             {
-                retorno.lista.Add(GenerationMedium(original.lista[i], original.lista[i + 1]));
+                retorno.listaCriaturas.Add(GenerationMedium(original.listaCriaturas[i], original.listaCriaturas[i + 1]));
             }
-            Debug.Log("nova lista é " + ((float)retorno.lista.Count-1) / ((float)original.lista.Count-1) + " da antiga");
+
+            retorno.listaPredadores = new List<Population.Generation>();
+            retorno.listaPredadores.Add(original.listaPredadores[0]);
+            for (int i = 1; i + 1 < original.listaPredadores.Count; i += 2)
+            {
+                retorno.listaPredadores.Add(GenerationMedium(original.listaPredadores[i], original.listaPredadores[i + 1]));
+            }
+            Debug.Log("nova lista é " + ((float)retorno.listaCriaturas.Count-1) / ((float)original.listaCriaturas.Count-1) + " da antiga");
             
             return retorno;
         }
@@ -110,14 +129,24 @@ public class SaveHandler : MonoBehaviour
 
     void UpdateHistorico()
     {
-        AddToJson(GetCurrentGenerationMedians());
-        Invoke("UpdateHistorico", MeasureDelay);
+        Population.Generation currentGenCriaturas = GetCurrentGenerationMedians(ParentCriaturas);
+        Population.Generation currentGenPredadores= GetCurrentGenerationMedians(ParentPredadores);
+        
+        AddToJson(currentGenCriaturas, currentGenPredadores);
+        
+        if (currentGenCriaturas.Quantidade == 0 && currentGenPredadores.Quantidade == 0 )
+        {
+            Invoke("Restart", 60);
+            SetBestHistorico();
+        }
+        else
+            Invoke("UpdateHistorico", MeasureDelay);
     }
     
-    Population.Generation GetCurrentGenerationMedians()
+    Population.Generation GetCurrentGenerationMedians(Transform Parent)
     {
         Criatura[] criaturas = Parent.GetComponentsInChildren<Criatura>();
-        int velocidade = 0, visao=0, vontadeDeAcasalamento=0, inteligencia=0;
+        int velocidade = 0, visao = 0, vontadeDeAcasalamento = 0, inteligencia = 0, saude = 0, R = 0, G = 0,B=0 ;
         int quantidade = criaturas.Length;
         for (int i = 0; i < quantidade; i++)
         {
@@ -125,15 +154,38 @@ public class SaveHandler : MonoBehaviour
             visao += criaturas[i].Genes.Visao;
             vontadeDeAcasalamento += criaturas[i].Genes.VontadeDeAcasalamento;
             inteligencia += criaturas[i].Genes.Inteligencia;
+            saude += criaturas[i].Genes.Saude;
+            R += criaturas[i].Genes.Red;
+            G += criaturas[i].Genes.Green;
+            B += criaturas[i].Genes.Blue;
         }
 
         Population.Generation geracao = new Population.Generation();
-        geracao.Velocidade = velocidade / quantidade;
-        geracao.Visao = visao / quantidade;
-        geracao.VontadeDeAcasalamento = vontadeDeAcasalamento / quantidade;
-        geracao.Inteligencia = inteligencia / quantidade;
-        geracao.Quantidade = quantidade;
+        if(quantidade != 0)
+        {
+            geracao.Velocidade = velocidade / quantidade;
+            geracao.Visao = visao / quantidade;
+            geracao.VontadeDeAcasalamento = vontadeDeAcasalamento / quantidade;
+            geracao.Inteligencia = inteligencia / quantidade;
+            geracao.Saude = saude / quantidade;
+            geracao.Quantidade = quantidade;
+            geracao.R = R / quantidade;
+            geracao.G = G / quantidade;
+            geracao.B = B / quantidade;
 
+        }
+        else
+        {
+            geracao.Velocidade = 0;
+            geracao.Visao = 0;
+            geracao.VontadeDeAcasalamento = 0;
+            geracao.Inteligencia = 0;
+            geracao.Saude =0;
+            geracao.Quantidade = 0;
+            geracao.R =  0;
+            geracao.G = 0;
+            geracao.B =  0;
+        }
         return geracao;
     }
 
@@ -145,12 +197,22 @@ public class SaveHandler : MonoBehaviour
         retorno.VontadeDeAcasalamento = (a.VontadeDeAcasalamento + b.VontadeDeAcasalamento) / 2;
         retorno.Inteligencia = (a.Inteligencia + b.Inteligencia) / 2;
         retorno.Visao = (a.Visao + b.Visao) / 2;
+        retorno.Saude = (a.Saude + b.Saude) / 2;
+        retorno.R = (a.R + b.R) / 2;
+        retorno.G = (a.G + b.G) / 2;
+        retorno.B = (a.B + b.B) / 2;
 
         return retorno;
     }
 
     int TamanhoDoHistorico(Population pop)
     {
-        return pop.lista.Count;
+        return pop.listaCriaturas.Count;
+    }
+
+    void Restart()
+    {
+        Debug.Log("Reiniciando...");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

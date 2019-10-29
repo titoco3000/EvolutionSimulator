@@ -13,13 +13,18 @@ public class Population
         public int VontadeDeAcasalamento;
         public int Inteligencia;
         public int Quantidade;
+        public int Saude;
+        public int R, G, B;
     }
 
-    public List<Generation> lista;
+
+    public List<Generation> listaCriaturas;
+    public List<Generation> listaPredadores;
+
     public int EscalaDeTempo;
 
 
-    public List<float> GetStat(string stat)
+    public List<float> GetStat(List<Generation> lista, string stat)
     {
         List<float> retorno = new List<float>();
 
@@ -35,6 +40,14 @@ public class Population
                 retorno.Add(generation.Inteligencia);
             else if (stat == "Quantidade")
                 retorno.Add(generation.Quantidade);
+            else if (stat == "Saude")
+                retorno.Add(generation.Saude);
+            else if (stat == "R")
+                retorno.Add(generation.R);
+            else if (stat == "G")
+                retorno.Add(generation.G);
+            else if (stat == "B")
+                retorno.Add(generation.B);
             else
                 Debug.LogError("Valor imcompatível (" + stat + ")");
 

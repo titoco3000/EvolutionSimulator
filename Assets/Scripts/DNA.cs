@@ -12,6 +12,7 @@ public class DNA
     public int Visao; //1-100
     public int VontadeDeAcasalamento; //2-100
     public int Inteligencia; //1-100
+    public int Saude; //1-100
 
     //esses aqui não tem valor funcional, só ilustrativo
     public int Red; //0-255
@@ -23,7 +24,7 @@ public class DNA
     //configurações
     #region
         //mutações
-    private float MutationChance = 0.2f;
+    private float MutationChance = 0.15f;
     private float MutationRate = 20f;
     //outros
     #endregion
@@ -42,8 +43,9 @@ public class DNA
         Visao = ChooseGene(father[1], mother[1]);
         VontadeDeAcasalamento = ChooseGene(father[2], mother[2]);
         Inteligencia = ChooseGene(father[3], father[3]);
+        Saude = ChooseGene(father[4], father[5]);
 
-        Vector3Int corDoFilho = ChooseColorGene(new Vector3Int(father[4], father[5], father[6]), new Vector3Int(mother[4], mother[5], mother[6]));
+        Vector3Int corDoFilho = ChooseColorGene(new Vector3Int(father[5], father[6], father[7]), new Vector3Int(mother[5], mother[6], mother[7]));
         Red = corDoFilho.x;
         Green = corDoFilho.y;
         Blue = corDoFilho.z;
@@ -57,6 +59,7 @@ public class DNA
         Visao = Random.Range(5, 95);
         VontadeDeAcasalamento = Random.Range(2, 95);
         Inteligencia = Random.Range(5, 95);
+        Saude = Random.Range(5, 95);
 
         Red = Random.Range(0, 255);
         Green = Random.Range(0, 255);
@@ -65,10 +68,11 @@ public class DNA
 
     public void SetDefaultGenes()
     {
-        Velocidade = 30;
-        Visao = 30;
-        VontadeDeAcasalamento = 30;
-        Inteligencia = 30;
+        Velocidade = 50;
+        Visao = 50;
+        VontadeDeAcasalamento = 50;
+        Inteligencia = 50;
+        Saude = 50;
 
         Red = 127;
         Green = 127;
@@ -78,19 +82,20 @@ public class DNA
     //O custo energetico do dna
     public int GetCost()
     {
-        return (Velocidade + Visao)/2;
+        return (Velocidade + Visao + Saude)/3;
     }
 
     public int[] ToArray()
     {
-        int[] output = new int[7];
+        int[] output = new int[8];
         output[0] = Velocidade;
         output[1] = Visao;
         output[2] = VontadeDeAcasalamento;
         output[3] = Inteligencia;
-        output[4] = Red;
-        output[5] = Green;
-        output[6] = Blue;
+        output[4] = Saude;
+        output[5] = Red;
+        output[6] = Green;
+        output[7] = Blue;
         return output;
     }
 
@@ -109,22 +114,22 @@ public class DNA
     }
     private Vector3Int ChooseColorGene(Vector3Int a, Vector3Int b)
     {
-        /* média perfeita
+        /*//média perfeita
         float mediaR = Mathf.Sqrt((Mathf.Pow(a.x, 2) + Mathf.Pow(b.x, 2))/2);
         float mediaG = Mathf.Sqrt((Mathf.Pow(a.y, 2) + Mathf.Pow(b.y, 2))/2);
         float mediaB = Mathf.Sqrt((Mathf.Pow(a.z, 2) + Mathf.Pow(b.z, 2))/2);
         */
 
-        //média simples
+        /*//média simples
         float mediaR = (a.x + b.x) / 2;
         float mediaG = (a.y + b.y) / 2;
         float mediaB = (a.z + b.z) / 2;
 
-
-        //escolhe um dos pais para fornecer o gene
-        //Vector3Int output = Random.Range(0, 1) < 0.5f ? a : b;
-
         Vector3Int output = new Vector3Int((int)mediaR, (int)mediaG, (int)mediaB);
+        */
+
+        //Escolhe de um dos pais
+        Vector3Int output = Random.Range(0.0f, 1.0f) < 0.5f ? a : b;
 
         //Cria (talvez) mutações
         if (Random.Range(0.0f, 1.0f) < MutationChance)
