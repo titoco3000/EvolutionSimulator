@@ -26,19 +26,22 @@ public class Criatura : MonoBehaviour
     //Referências
     public LayerMask criaturaLayer;
     public LayerMask comidaLayer;
+    public LayerMask inimigoLayer;
 
     //Configurações
     private int InitialFood = 500;
-    private int MaxFoodAmount = 2000;
+    public int MaxFoodAmount = 800;
     public float descansoPosBebe = 10f;
     public float tempoDeInfancia = 12f;
     public float QualidadeDaVisao = 0.2f;
-    private int CustoDeAcasalamento = 2;
+    public int CustoDeAcasalamento = 2;
     private int MinFoodParaAcasalar = 60;
     public float maxTempoDeNamoro = 10f;
     private int VagarDistancia = 10;
     private float distanciaMinimaParaInteragir = 1.2f;
     public float TempoDeVida = 40f;
+    public int custoEnergeticoMultiplyer = 1;
+
     public string nomeDoPrefab = "Criatura Filhote";
     public string nomeDaCriatura = "Criatura";
 
@@ -104,7 +107,7 @@ public class Criatura : MonoBehaviour
             if ( distanceToTarget <= distanciaMinimaParaInteragir)
             {
                 //para em frente ao target
-                agent.SetDestination(transform.position);
+                DeterminarDestino(transform.position);
                 //interage com ele
                 if (TargetType == "Comida")
                 {
@@ -120,11 +123,11 @@ public class Criatura : MonoBehaviour
                 if(TargetType == "Parceiro"&&distanceToTarget <= distanciaMinimaParaInteragir * 2 && Passivo)
                 {
                     //se é o passivo, parar a uma distancia maior
-                     agent.SetDestination(transform.position);
+                     DeterminarDestino(transform.position);
                 }
                 else
                 {
-                    agent.SetDestination(TargetTransform.position);
+                    DeterminarDestino(TargetTransform.position);
                 }
             }
         }
@@ -135,6 +138,15 @@ public class Criatura : MonoBehaviour
                 Apaixonado = false;
                 Passivo = false;
             }
+        }
+
+        //Procura inimigo no seu entorno
+        Transform inimigo = SearchFor("Inimigo", 10f);
+        if(inimigo != null)
+        {
+            Debug.Log("Achei perigo");
+            //fugir
+            DeterminarDestino(transform.position - inimigo.position);
         }
     }
 
@@ -151,7 +163,7 @@ public class Criatura : MonoBehaviour
         else
         {
             //cobrar o preço energético
-            GastarComida(Genes.GetCost());
+            GastarComida(Genes.GetCost() * custoEnergeticoMultiplyer);
             //FoodAmount -= Genes.GetCost();
 
             TargetTransform = null;
@@ -194,18 +206,17 @@ public class Criatura : MonoBehaviour
             }
 
             //se não conseguir comida nem namoro, vagar
-            if(TargetTransform == null && agent.isOnNavMesh)
+            if(TargetTransform == null)
             {
                 TargetType = "";
                 Vector3 targetPosition = new Vector3(
                     transform.position.x + Random.Range(-VagarDistancia, VagarDistancia),
                     transform.position.y,
                     transform.position.z + Random.Range(-VagarDistancia, VagarDistancia));
-                agent.SetDestination(targetPosition);
+                DeterminarDestino(targetPosition);
             }
-            else if(agent.isOnNavMesh)
-                //se consegui, andar até ele
-                agent.SetDestination(TargetTransform.position);
+            else 
+                DeterminarDestino(TargetTransform.position);
 
 
             
@@ -255,11 +266,14 @@ public class Criatura : MonoBehaviour
     private Transform SearchFor(string procura, float radius = 10f)
     {
         LayerMask procuraLayer = procura == "Comida" ? comidaLayer : criaturaLayer;
+        if (procura == "Inimigo")
+            procuraLayer = inimigoLayer;
+
         Collider[] colliders = Physics.OverlapSphere(transform.position, radius * QualidadeDaVisao, procuraLayer);
 
 
         //filtra os disponíveis
-        List<Transform> itemsQuePodem = new List<Transform>(); ;
+        List<Transform> itemsQuePodem = new List<Transform>();
         foreach (var item in colliders)
         {
             if(procura == "Comida")
@@ -269,12 +283,16 @@ public class Criatura : MonoBehaviour
                     itemsQuePodem.Add(item.transform);
                 }
             }
-            else
+            else if(procura == "Parceiro")
             {
                 if(item.GetComponent<Criatura>().PodeReproduzir() && item.GetComponent<Criatura>().enabled && item.transform != transform)
                 {
                     itemsQuePodem.Add(item.transform);
                 }
+            }
+            else if(procura == "Inimigo")
+            {
+                itemsQuePodem.Add(item.transform);
             }
         }
         if (itemsQuePodem.Count == 0)
@@ -312,7 +330,7 @@ public class Criatura : MonoBehaviour
 
     public bool PodeReproduzir()
     {
-        bool retorno = !Apaixonado && !IndisponivelParaNamoro && distanciaMinimaParaInteragir+ (100 - Genes.VontadeDeAcasalamento) * CustoDeAcasalamento < FoodAmount*2;
+        bool retorno = !Apaixonado && !IndisponivelParaNamoro && (100 - Genes.VontadeDeAcasalamento) * CustoDeAcasalamento < FoodAmount;
         return retorno;
     }
 
@@ -378,11 +396,20 @@ public class Criatura : MonoBehaviour
         
     }
 
+    void DeterminarDestino(Vector3 destination)
+    {
+        if(agent.isOnNavMesh)
+            agent.SetDestination(destination);
+    }
+
 
     //Debug
     private void OnDrawGizmosSelected()
     {
         Gizmos.DrawWireSphere(transform.position, Genes.Visao * QualidadeDaVisao);
+        
     }
+
+
 
 }

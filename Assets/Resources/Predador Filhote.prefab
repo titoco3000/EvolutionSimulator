@@ -4911,11 +4911,17 @@ MonoBehaviour:
   comidaLayer:
     serializedVersion: 2
     m_Bits: 256
+  inimigoLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  MaxFoodAmount: 1000
   descansoPosBebe: 10
   tempoDeInfancia: 12
   QualidadeDaVisao: 0.2
+  CustoDeAcasalamento: 12
   maxTempoDeNamoro: 10
   TempoDeVida: 5
+  custoEnergeticoMultiplyer: 1
   nomeDoPrefab: Predador Filhote
   nomeDaCriatura: Predador
   IndisponivelParaNamoro: 1

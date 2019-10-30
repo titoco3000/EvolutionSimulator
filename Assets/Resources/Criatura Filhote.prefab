@@ -4819,11 +4819,17 @@ MonoBehaviour:
   comidaLayer:
     serializedVersion: 2
     m_Bits: 512
+  inimigoLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  MaxFoodAmount: 2000
   descansoPosBebe: 10
   tempoDeInfancia: 12
-  QualidadeDaVisao: 0.2
+  QualidadeDaVisao: 0.4
+  CustoDeAcasalamento: 2
   maxTempoDeNamoro: 10
   TempoDeVida: 10
+  custoEnergeticoMultiplyer: 1
   nomeDoPrefab: Criatura Filhote
   nomeDaCriatura: Criatura
   IndisponivelParaNamoro: 1
@@ -4924,6 +4930,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0870040f88360334abda9ee4420e20ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  valorNutricional: 10
   Comido: 0
-  FadeRate: 0.04

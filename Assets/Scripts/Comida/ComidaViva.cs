@@ -11,7 +11,7 @@ public class ComidaViva : Comida
         {
             Criatura minhaCriatura = GetComponent<Criatura>();
             GetComponent<NavMeshAgent>().enabled = false;
-            cliente.FoodAmount += minhaCriatura.FoodAmount;
+            cliente.FoodAmount += minhaCriatura.FoodAmount*2;
             minhaCriatura.enabled = false;
 
             base.Comer(cliente);
