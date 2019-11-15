@@ -21,7 +21,7 @@ public class Population
     public List<Generation> listaCriaturas;
     public List<Generation> listaPredadores;
 
-    public int EscalaDeTempo;
+    public float EscalaDeTempo;
 
 
     public List<float> GetStat(List<Generation> lista, string stat)

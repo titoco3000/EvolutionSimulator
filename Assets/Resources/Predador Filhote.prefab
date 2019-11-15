@@ -4771,7 +4771,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7845822243139352755
 Transform:
   m_ObjectHideFlags: 0
@@ -4854,11 +4854,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7840408309454856256}
-  - component: {fileID: 7840408309454856260}
+  - component: {fileID: 2860256458426274693}
   - component: {fileID: 7840408309454856259}
   - component: {fileID: 7840408309454856258}
-  - component: {fileID: 7840408309454856261}
   - component: {fileID: 7840408309454856257}
+  - component: {fileID: 6967303266608391542}
   m_Layer: 10
   m_Name: Predador Filhote
   m_TagString: Player
@@ -4882,7 +4882,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7840408309454856260
+--- !u!114 &2860256458426274693
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4891,7 +4891,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7840408309454856263}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58015451191615a4ab57e9ae708d565c, type: 3}
+  m_Script: {fileID: 11500000, guid: 2c8b44699b0178d49973055289113a72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Genes:
@@ -4914,16 +4914,18 @@ MonoBehaviour:
   inimigoLayer:
     serializedVersion: 2
     m_Bits: 0
-  MaxFoodAmount: 1000
+  InitialFood: 500
+  MaxFoodAmount: 2000
   descansoPosBebe: 10
   tempoDeInfancia: 12
-  QualidadeDaVisao: 0.2
-  CustoDeAcasalamento: 12
+  QualidadeDaVisao: 0.4
+  CustoDeAcasalamento: 2
   maxTempoDeNamoro: 10
   TempoDeVida: 5
   custoEnergeticoMultiplyer: 1
   nomeDoPrefab: Predador Filhote
   nomeDaCriatura: Predador
+  manager: {fileID: 0}
   IndisponivelParaNamoro: 1
   Apaixonado: 0
   Passivo: 0
@@ -4935,7 +4937,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7840408309454856263}
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: -5495902117074765545, guid: 682cdea77357abc409d351a4863e8c66, type: 3}
 --- !u!23 &7840408309454856258
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4943,7 +4945,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7840408309454856263}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -4974,20 +4976,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!136 &7840408309454856261
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7840408309454856263}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!195 &7840408309454856257
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -4997,7 +4985,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 7840408309454856263}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 0.6
   m_Speed: 20
   m_Acceleration: 8
   avoidancePriority: 50
@@ -5010,3 +4998,16 @@ NavMeshAgent:
   m_BaseOffset: 0.95
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!65 &6967303266608391542
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7840408309454856263}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.0346305, y: 2.06959, z: 1.035288}
+  m_Center: {x: 0, y: 0.05, z: 0}

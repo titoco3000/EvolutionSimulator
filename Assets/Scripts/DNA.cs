@@ -25,20 +25,25 @@ public class DNA
     #region
         //mutações
     private float MutationChance = 0.15f;
-    private float MutationRate = 20f;
+    private float MutationRate = 10f;
     //outros
     #endregion
 
     //Constructors
     #region
     //construtor da geração espontanea, exige chamar o SetRandomGenes()
-    public DNA()
+    public DNA(float chance, float rate)
     {
+        MutationChance = chance;
+        MutationRate = rate;
     }
 
     //construtor dos descendentes
-    public DNA(int[] father, int[] mother)
+    public DNA(int[] father, int[] mother, float chance, float rate)
     {
+        MutationChance = chance;
+        MutationRate = rate;
+
         Velocidade = ChooseGene(father[0], mother[0]);
         Visao = ChooseGene(father[1], mother[1]);
         VontadeDeAcasalamento = ChooseGene(father[2], mother[2]);

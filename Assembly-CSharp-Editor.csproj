@@ -63,6 +63,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\External\BOXOPHOBIC\Utils\Editor\BConst.cs" />
+    <Compile Include="Assets\External\BOXOPHOBIC\Utils\Editor\BEditorGUI.cs" />
+    <Compile Include="Assets\External\BOXOPHOBIC\Utils\Editor\BEditorUtils.cs" />
+    <Compile Include="Assets\External\BOXOPHOBIC\Utils\Editor\BVersion.cs" />
+    <Compile Include="Assets\External\BOXOPHOBIC\Utils\PropertyDrawers\Editor\BBannerDrawer.cs" />
+    <Compile Include="Assets\External\BOXOPHOBIC\Utils\PropertyDrawers\Editor\BCategoryAttributeDrawer.cs" />
+    <Compile Include="Assets\External\BOXOPHOBIC\Utils\PropertyDrawers\Editor\BCategoryDrawer.cs" />
+    <Compile Include="Assets\External\BOXOPHOBIC\Utils\PropertyDrawers\Editor\BInteractiveAttributeDrawer.cs" />
+    <Compile Include="Assets\External\BOXOPHOBIC\Utils\PropertyDrawers\Editor\BInteractiveDrawer.cs" />
+    <Compile Include="Assets\External\BOXOPHOBIC\Utils\PropertyDrawers\Editor\BMessageAttributeDrawer.cs" />
+    <Compile Include="Assets\External\BOXOPHOBIC\Utils\PropertyDrawers\Editor\BMessageDrawer.cs" />
+    <Compile Include="Assets\External\BOXOPHOBIC\Utils\PropertyDrawers\Editor\BRangeOptionsAttributeDrawer.cs" />
+    <Compile Include="Assets\External\BOXOPHOBIC\Utils\PropertyDrawers\Editor\BRangeSimpleAttributeDrawer.cs" />
     <Compile Include="Assets\Materials\_MK\MKToonFree\Editor\MKToonFreeEditor.cs" />
     <Reference Include="UnityEditor.TestRunner">
       <HintPath>D:/User/Documents/Dev/Unity Projects/EvolutionSimulator/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>

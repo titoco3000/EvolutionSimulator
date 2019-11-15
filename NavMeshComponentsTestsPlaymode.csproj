@@ -63,12 +63,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\NavMeshComponents-master - 1\NavMeshComponents-master\Assets\Tests\NavMeshSurfaceAgentTests.cs" />
-    <Compile Include="Assets\NavMeshComponents-master - 1\NavMeshComponents-master\Assets\Tests\NavMeshSurfaceLinkTests.cs" />
-    <Compile Include="Assets\NavMeshComponents-master - 1\NavMeshComponents-master\Assets\Tests\NavMeshSurfaceModifierTests.cs" />
-    <Compile Include="Assets\NavMeshComponents-master - 1\NavMeshComponents-master\Assets\Tests\NavMeshSurfaceModifierVolumeTests.cs" />
-    <Compile Include="Assets\NavMeshComponents-master - 1\NavMeshComponents-master\Assets\Tests\NavMeshSurfaceTests.cs" />
-    <None Include="Assets\NavMeshComponents-master - 1\NavMeshComponents-master\Assets\Tests\NavMeshComponentsTestsPlaymode.asmdef" />
+    <Compile Include="Assets\External\NavMeshComponents-master - 1\NavMeshComponents-master\Assets\Tests\NavMeshSurfaceAgentTests.cs" />
+    <Compile Include="Assets\External\NavMeshComponents-master - 1\NavMeshComponents-master\Assets\Tests\NavMeshSurfaceLinkTests.cs" />
+    <Compile Include="Assets\External\NavMeshComponents-master - 1\NavMeshComponents-master\Assets\Tests\NavMeshSurfaceModifierTests.cs" />
+    <Compile Include="Assets\External\NavMeshComponents-master - 1\NavMeshComponents-master\Assets\Tests\NavMeshSurfaceModifierVolumeTests.cs" />
+    <Compile Include="Assets\External\NavMeshComponents-master - 1\NavMeshComponents-master\Assets\Tests\NavMeshSurfaceTests.cs" />
+    <None Include="Assets\External\NavMeshComponents-master - 1\NavMeshComponents-master\Assets\Tests\NavMeshComponentsTestsPlaymode.asmdef" />
     <Reference Include="UnityEngine.TestRunner">
       <HintPath>D:/User/Documents/Dev/Unity Projects/EvolutionSimulator/Library/ScriptAssemblies/UnityEngine.TestRunner.dll</HintPath>
     </Reference>

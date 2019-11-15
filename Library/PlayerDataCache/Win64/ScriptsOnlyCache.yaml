@@ -2,15 +2,21 @@ ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
     - CameraMovement
-    - Comida
+    - ComidaMorta
     - ComidaViva
+    - Configurations
     - Criatura
+    - CriaturaDoMenu
+    - DataHolder
     - FoodSpawnwer
     - GradientGraph
     - Grafico
     - GraphInfo
     - Manager
+    - MoreInfo
+    - Predador
     - SaveHandler
+    - SceneSwapper
     - SliderDuo
     - TimeManager
     - UI_Controller
@@ -22,19 +28,141 @@ ScriptsOnlyBuild:
     - UnityEditor.Tilemaps.GridPalettes
     - UnityEditor.Tilemaps.SceneViewGridManager
     - UnityEditor.Tilemaps.TileDragAndDropManager
+    UnityEditor.Graphs.dll:
+    - UnityEditor.Graphs.AnimationBlendTree.Graph
+    - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.Graph
+    - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
+    - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
     - UnityEditor.TestTools.TestRunner.TestListCacheData
     UnityEngine.UI.dll:
     - UnityEngine.EventSystems.EventSystem
+    - UnityEngine.EventSystems.EventTrigger
     - UnityEngine.EventSystems.StandaloneInputModule
     - UnityEngine.UI.Button
     - UnityEngine.UI.CanvasScaler
     - UnityEngine.UI.GraphicRaycaster
     - UnityEngine.UI.Image
+    - UnityEngine.UI.InputField
     - UnityEngine.UI.RawImage
     - UnityEngine.UI.Text
+    - UnityEngine.UI.Toggle
   sceneClasses:
+    Assets/Scenes/Menu.unity:
+    - Class: 1
+      Script: {instanceID: 0}
+    - Class: 4
+      Script: {instanceID: 0}
+    - Class: 20
+      Script: {instanceID: 0}
+    - Class: 21
+      Script: {instanceID: 0}
+    - Class: 23
+      Script: {instanceID: 0}
+    - Class: 28
+      Script: {instanceID: 0}
+    - Class: 33
+      Script: {instanceID: 0}
+    - Class: 43
+      Script: {instanceID: 0}
+    - Class: 48
+      Script: {instanceID: 0}
+    - Class: 64
+      Script: {instanceID: 0}
+    - Class: 65
+      Script: {instanceID: 0}
+    - Class: 74
+      Script: {instanceID: 0}
+    - Class: 81
+      Script: {instanceID: 0}
+    - Class: 89
+      Script: {instanceID: 0}
+    - Class: 91
+      Script: {instanceID: 0}
+    - Class: 95
+      Script: {instanceID: 0}
+    - Class: 104
+      Script: {instanceID: 0}
+    - Class: 108
+      Script: {instanceID: 0}
+    - Class: 114
+      Script: {instanceID: 9710}
+    - Class: 114
+      Script: {instanceID: 9856}
+    - Class: 114
+      Script: {instanceID: 9858}
+    - Class: 114
+      Script: {instanceID: 9894}
+    - Class: 114
+      Script: {instanceID: 9938}
+    - Class: 114
+      Script: {instanceID: 9996}
+    - Class: 114
+      Script: {instanceID: 10010}
+    - Class: 114
+      Script: {instanceID: 10102}
+    - Class: 114
+      Script: {instanceID: 10392}
+    - Class: 114
+      Script: {instanceID: 10460}
+    - Class: 114
+      Script: {instanceID: 10722}
+    - Class: 114
+      Script: {instanceID: 10824}
+    - Class: 114
+      Script: {instanceID: 10846}
+    - Class: 114
+      Script: {instanceID: 10920}
+    - Class: 114
+      Script: {instanceID: 11028}
+    - Class: 114
+      Script: {instanceID: 11306}
+    - Class: 114
+      Script: {instanceID: 11344}
+    - Class: 114
+      Script: {instanceID: 11574}
+    - Class: 114
+      Script: {instanceID: 11720}
+    - Class: 114
+      Script: {instanceID: 11730}
+    - Class: 114
+      Script: {instanceID: 11760}
+    - Class: 114
+      Script: {instanceID: 11776}
+    - Class: 115
+      Script: {instanceID: 0}
+    - Class: 120
+      Script: {instanceID: 0}
+    - Class: 128
+      Script: {instanceID: 0}
+    - Class: 135
+      Script: {instanceID: 0}
+    - Class: 136
+      Script: {instanceID: 0}
+    - Class: 157
+      Script: {instanceID: 0}
+    - Class: 195
+      Script: {instanceID: 0}
+    - Class: 198
+      Script: {instanceID: 0}
+    - Class: 199
+      Script: {instanceID: 0}
+    - Class: 208
+      Script: {instanceID: 0}
+    - Class: 213
+      Script: {instanceID: 0}
+    - Class: 222
+      Script: {instanceID: 0}
+    - Class: 223
+      Script: {instanceID: 0}
+    - Class: 224
+      Script: {instanceID: 0}
+    - Class: 238
+      Script: {instanceID: 0}
+    - Class: 258
+      Script: {instanceID: 0}
     Assets/Scenes/SampleScene.unity:
     - Class: 1
       Script: {instanceID: 0}
@@ -69,52 +197,52 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 9698}
+      Script: {instanceID: 9710}
     - Class: 114
-      Script: {instanceID: 9746}
+      Script: {instanceID: 9760}
     - Class: 114
-      Script: {instanceID: 9840}
+      Script: {instanceID: 9856}
     - Class: 114
-      Script: {instanceID: 9842}
+      Script: {instanceID: 9858}
     - Class: 114
-      Script: {instanceID: 9878}
+      Script: {instanceID: 9894}
     - Class: 114
-      Script: {instanceID: 9920}
+      Script: {instanceID: 9938}
     - Class: 114
-      Script: {instanceID: 10366}
+      Script: {instanceID: 10392}
     - Class: 114
-      Script: {instanceID: 10382}
+      Script: {instanceID: 10410}
     - Class: 114
-      Script: {instanceID: 10590}
+      Script: {instanceID: 10628}
     - Class: 114
-      Script: {instanceID: 10780}
+      Script: {instanceID: 10824}
     - Class: 114
-      Script: {instanceID: 10800}
+      Script: {instanceID: 10846}
     - Class: 114
-      Script: {instanceID: 11180}
+      Script: {instanceID: 10920}
     - Class: 114
-      Script: {instanceID: 11248}
+      Script: {instanceID: 11238}
     - Class: 114
-      Script: {instanceID: 11286}
+      Script: {instanceID: 11306}
     - Class: 114
-      Script: {instanceID: 11304}
+      Script: {instanceID: 11344}
     - Class: 114
-      Script: {instanceID: 11324}
+      Script: {instanceID: 11362}
     - Class: 114
-      Script: {instanceID: 11492}
+      Script: {instanceID: 11382}
     - Class: 114
-      Script: {instanceID: 11534}
+      Script: {instanceID: 11552}
     - Class: 114
-      Script: {instanceID: 11560}
+      Script: {instanceID: 11574}
     - Class: 114
-      Script: {instanceID: 11666}
+      Script: {instanceID: 11596}
     - Class: 114
-      Script: {instanceID: 11696}
+      Script: {instanceID: 11730}
     - Class: 114
-      Script: {instanceID: 11750}
+      Script: {instanceID: 11760}
+    - Class: 114
+      Script: {instanceID: 11814}
     - Class: 115
-      Script: {instanceID: 0}
-    - Class: 120
       Script: {instanceID: 0}
     - Class: 128
       Script: {instanceID: 0}
@@ -175,7 +303,7 @@ ScriptsOnlyBuild:
     className: TMP_Dropdown
   - hash:
       serializedVersion: 2
-      Hash: 9436114b7df53159211582ca1c191bda
+      Hash: 62a55dc9c5693172c9938df1f3f84327
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Manager
@@ -199,13 +327,13 @@ ScriptsOnlyBuild:
     className: TMP_ScrollbarEventHandler
   - hash:
       serializedVersion: 2
-      Hash: 60905819c1f6057a17a34cda05b9b6e5
+      Hash: 404624adeda4e38ad1bb8feb40d214b9
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Criatura
   - hash:
       serializedVersion: 2
-      Hash: e0136290349e4bdc7bbd11a6a8acbbf8
+      Hash: 8cbeb220151c279688a70d4e072acdee
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: FoodSpawnwer
@@ -265,10 +393,22 @@ ScriptsOnlyBuild:
     className: TMP_InputField
   - hash:
       serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: SceneSwapper
+  - hash:
+      serializedVersion: 2
       Hash: 7ab0e790220bdca831fdd886b339039d
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: GridLayoutGroup
+  - hash:
+      serializedVersion: 2
+      Hash: cac0a9adfe048caf5106798e73f23be8
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: DataHolder
   - hash:
       serializedVersion: 2
       Hash: 8aa3d6ccbcb54ee8db6c1229854adaaa
@@ -293,6 +433,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.EventSystems
     className: PhysicsRaycaster
+  - hash:
+      serializedVersion: 2
+      Hash: 9909829c0320f14524e10f17e9272cb4
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: MoreInfo
   - hash:
       serializedVersion: 2
       Hash: bd3cf68c8964d3c66d1c43f4f98508c9
@@ -361,7 +507,7 @@ ScriptsOnlyBuild:
     className: ControlPlayableAsset
   - hash:
       serializedVersion: 2
-      Hash: 5e0f489c6467739cd8670dec64cddec8
+      Hash: a0d8749c8ed60c0b7985616a6acfd7e3
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: SaveHandler
@@ -391,6 +537,12 @@ ScriptsOnlyBuild:
     className: AutoPlayVideo
   - hash:
       serializedVersion: 2
+      Hash: 404624adeda4e38ad1bb8feb40d214b9
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: CriaturaDoMenu
+  - hash:
+      serializedVersion: 2
       Hash: 7299a528424874bcf6b5736b5305ac37
     assemblyName: NavMeshComponents.dll
     namespaceName: UnityEngine.AI
@@ -401,6 +553,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_Asset
+  - hash:
+      serializedVersion: 2
+      Hash: 38b8fd090a55438437bac5c0582b177e
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Sound
   - hash:
       serializedVersion: 2
       Hash: d4020bafcd3ccbb5601a6e6c8ac78be0
@@ -433,6 +591,12 @@ ScriptsOnlyBuild:
     className: TMP_SpriteAnimator
   - hash:
       serializedVersion: 2
+      Hash: ac2588f0bf99303df11bdebf47371539
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Configurations
+  - hash:
+      serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: UnityEngine.TestRunner.dll
     namespaceName: UnityEngine.TestTools.TestRunner.Callbacks
@@ -461,6 +625,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: VerticalLayoutGroup
+  - hash:
+      serializedVersion: 2
+      Hash: 404624adeda4e38ad1bb8feb40d214b9
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Predador
   - hash:
       serializedVersion: 2
       Hash: 783f593b9380cf72d0f7ebfd4a0d4bcd
@@ -559,7 +729,7 @@ ScriptsOnlyBuild:
     className: BeforeAfterTestCommandState
   - hash:
       serializedVersion: 2
-      Hash: abf5cc84f9ecdf99edd4fa5baede895a
+      Hash: 685352fd60f4a3d3669227202addcf78
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GradientGraph
@@ -569,6 +739,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: MarkerTrack
+  - hash:
+      serializedVersion: 2
+      Hash: aa9217f6931c343be1767d024db588e8
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: MirrorRotation
   - hash:
       serializedVersion: 2
       Hash: d791aa6007fa3640be1164ea75bb087d
@@ -583,13 +759,19 @@ ScriptsOnlyBuild:
     className: CameraMovement
   - hash:
       serializedVersion: 2
+      Hash: bc55783cecd8795c1c92c620e8b09e34
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ComidaMorta
+  - hash:
+      serializedVersion: 2
       Hash: 0d8622f3bd55e3a63a66183f88f7115c
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Grafico
   - hash:
       serializedVersion: 2
-      Hash: d17046884a43708de2fcb86c2c530e34
+      Hash: bc55783cecd8795c1c92c620e8b09e34
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Comida
@@ -643,7 +825,7 @@ ScriptsOnlyBuild:
     className: TMP_SubMesh
   - hash:
       serializedVersion: 2
-      Hash: d17046884a43708de2fcb86c2c530e34
+      Hash: bc55783cecd8795c1c92c620e8b09e34
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: ComidaViva
@@ -703,5 +885,6 @@ ScriptsOnlyBuild:
     className: PlayableTrack
   platform: 19
   scenePathNames:
+  - Assets/Scenes/Menu.unity
   - Assets/Scenes/SampleScene.unity
   playerPath: D:/User/Documents/Dev/Unity Projects/EvolutionSimulator/Windows/EvolutionSimulator.exe

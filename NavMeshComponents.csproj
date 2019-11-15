@@ -63,11 +63,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\NavMeshComponents-master - 1\NavMeshComponents-master\Assets\NavMeshComponents\Scripts\NavMeshLink.cs" />
-    <Compile Include="Assets\NavMeshComponents-master - 1\NavMeshComponents-master\Assets\NavMeshComponents\Scripts\NavMeshModifier.cs" />
-    <Compile Include="Assets\NavMeshComponents-master - 1\NavMeshComponents-master\Assets\NavMeshComponents\Scripts\NavMeshModifierVolume.cs" />
-    <Compile Include="Assets\NavMeshComponents-master - 1\NavMeshComponents-master\Assets\NavMeshComponents\Scripts\NavMeshSurface.cs" />
-    <None Include="Assets\NavMeshComponents-master - 1\NavMeshComponents-master\Assets\NavMeshComponents\Scripts\NavMeshComponents.asmdef" />
+    <Compile Include="Assets\External\NavMeshComponents-master - 1\NavMeshComponents-master\Assets\NavMeshComponents\Scripts\NavMeshLink.cs" />
+    <Compile Include="Assets\External\NavMeshComponents-master - 1\NavMeshComponents-master\Assets\NavMeshComponents\Scripts\NavMeshModifier.cs" />
+    <Compile Include="Assets\External\NavMeshComponents-master - 1\NavMeshComponents-master\Assets\NavMeshComponents\Scripts\NavMeshModifierVolume.cs" />
+    <Compile Include="Assets\External\NavMeshComponents-master - 1\NavMeshComponents-master\Assets\NavMeshComponents\Scripts\NavMeshSurface.cs" />
+    <None Include="Assets\External\NavMeshComponents-master - 1\NavMeshComponents-master\Assets\NavMeshComponents\Scripts\NavMeshComponents.asmdef" />
     <Reference Include="UnityEditor.UI">
       <HintPath>D:/User/Documents/Dev/Unity Projects/EvolutionSimulator/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>

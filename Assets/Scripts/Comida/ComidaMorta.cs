@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ComidaMorta : Comida
 {
-    public int valorNutricional = 10;
     public override void Comer(Criatura cliente)
     {
         if (!Comido)

@@ -4822,16 +4822,18 @@ MonoBehaviour:
   inimigoLayer:
     serializedVersion: 2
     m_Bits: 1024
+  InitialFood: 500
   MaxFoodAmount: 2000
   descansoPosBebe: 10
   tempoDeInfancia: 12
   QualidadeDaVisao: 0.4
   CustoDeAcasalamento: 2
   maxTempoDeNamoro: 10
-  TempoDeVida: 10
+  TempoDeVida: 5
   custoEnergeticoMultiplyer: 1
   nomeDoPrefab: Criatura Filhote
   nomeDaCriatura: Criatura
+  manager: {fileID: 0}
   IndisponivelParaNamoro: 1
   Apaixonado: 0
   Passivo: 0

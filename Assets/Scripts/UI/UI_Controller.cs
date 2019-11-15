@@ -103,7 +103,7 @@ public class UI_Controller : MonoBehaviour
     }
 
 
-    void ColocarValoresNoGrafico(string title, List<float> valoresCriatura, List<float> valoresPredador, int escala)
+    void ColocarValoresNoGrafico(string title, List<float> valoresCriatura, List<float> valoresPredador, float escala)
     {
         if(title != "Quantidade")
         {
@@ -139,17 +139,24 @@ public class UI_Controller : MonoBehaviour
     {
         if(titulo == "Cor")
         {
-            List<float> Red = Populacao.GetStat(Populacao.listaCriaturas, "R");
-            List<float> Green = Populacao.GetStat(Populacao.listaCriaturas, "G");
-            List<float> Blue = Populacao.GetStat(Populacao.listaCriaturas, "B");
+            List<float> RedCriatura = Populacao.GetStat(Populacao.listaCriaturas, "R");
+            List<float> GreenCriatura = Populacao.GetStat(Populacao.listaCriaturas, "G");
+            List<float> BlueCriatura = Populacao.GetStat(Populacao.listaCriaturas, "B");
+          
+            List<float> RedPredador = Populacao.GetStat(Populacao.listaPredadores, "R");
+            List<float> GreenPredador = Populacao.GetStat(Populacao.listaPredadores, "G");
+            List<float> BluePredador = Populacao.GetStat(Populacao.listaPredadores, "B");
 
-            List<Color> cores = new List<Color>();
-            for (int i = 0; i < Red.Count; i++)
+            List<Color> coresCriatura = new List<Color>();
+            List<Color> coresPredador = new List<Color>();
+
+            for (int i = 0; i < RedCriatura.Count; i++)
             {
                 //divide por 255 para fica na escala 0-1
-                cores.Add(new Color(Red[i]/255f, Green[i]/255f, Blue[i] / 255f));
+                coresCriatura.Add(new Color(RedCriatura[i]/255f, GreenCriatura[i]/255f, BlueCriatura[i] / 255f));
+                coresPredador.Add(new Color(RedPredador[i] / 255f, GreenPredador[i] / 255f, BluePredador[i] / 255f));
             }
-            Graph.SetGraph(titulo, cores, Populacao.EscalaDeTempo);
+            Graph.SetGraph(titulo, coresCriatura, coresPredador, Populacao.EscalaDeTempo);
             Graph.DisplayGraph("Colorido");
             
         }

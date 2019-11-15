@@ -63,12 +63,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\NavMeshComponents-master - 1\NavMeshComponents-master\Assets\Tests\Editor\NavMeshModifierVolumeInPrefabTests.cs" />
-    <Compile Include="Assets\NavMeshComponents-master - 1\NavMeshComponents-master\Assets\Tests\Editor\NavMeshSurfaceInPrefabTests.cs" />
-    <Compile Include="Assets\NavMeshComponents-master - 1\NavMeshComponents-master\Assets\Tests\Editor\NavMeshSurfaceInPrefabVariantTests.cs" />
-    <Compile Include="Assets\NavMeshComponents-master - 1\NavMeshComponents-master\Assets\Tests\Editor\PrefabSavingUtil.cs" />
-    <Compile Include="Assets\NavMeshComponents-master - 1\NavMeshComponents-master\Assets\Tests\Editor\PrefabStageAutoSavingUtil.cs" />
-    <None Include="Assets\NavMeshComponents-master - 1\NavMeshComponents-master\Assets\Tests\Editor\NavMeshComponentsTestsEditmode.asmdef" />
+    <Compile Include="Assets\External\NavMeshComponents-master - 1\NavMeshComponents-master\Assets\Tests\Editor\NavMeshModifierVolumeInPrefabTests.cs" />
+    <Compile Include="Assets\External\NavMeshComponents-master - 1\NavMeshComponents-master\Assets\Tests\Editor\NavMeshSurfaceInPrefabTests.cs" />
+    <Compile Include="Assets\External\NavMeshComponents-master - 1\NavMeshComponents-master\Assets\Tests\Editor\NavMeshSurfaceInPrefabVariantTests.cs" />
+    <Compile Include="Assets\External\NavMeshComponents-master - 1\NavMeshComponents-master\Assets\Tests\Editor\PrefabSavingUtil.cs" />
+    <Compile Include="Assets\External\NavMeshComponents-master - 1\NavMeshComponents-master\Assets\Tests\Editor\PrefabStageAutoSavingUtil.cs" />
+    <None Include="Assets\External\NavMeshComponents-master - 1\NavMeshComponents-master\Assets\Tests\Editor\NavMeshComponentsTestsEditmode.asmdef" />
     <Reference Include="UnityEngine.TestRunner">
       <HintPath>D:/User/Documents/Dev/Unity Projects/EvolutionSimulator/Library/ScriptAssemblies/UnityEngine.TestRunner.dll</HintPath>
     </Reference>

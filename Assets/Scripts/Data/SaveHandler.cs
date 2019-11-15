@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
-using UnityEngine.SceneManagement;
 
 
 public class SaveHandler : MonoBehaviour
@@ -10,11 +9,14 @@ public class SaveHandler : MonoBehaviour
     public Transform ParentCriaturas;
     public Transform ParentPredadores;
 
-    public int MeasureDelay = 10;
+    private float MeasureDelay = 7.5f;
     public int MaxGraphDots = 41;
 
     private string Path_historico;
     private string Path_historicoBest;
+
+    private Manager manager;
+    private float lastUpdatedTime = 0;
 
 
     void Start()
@@ -22,8 +24,10 @@ public class SaveHandler : MonoBehaviour
         Path_historico = Application.dataPath + "/historico.json";
         Path_historicoBest = Application.dataPath + "/historicoBest.json";
 
+        manager = FindObjectOfType<Manager>();
+
         Invoke("IniciarJson", .1f);
-        Invoke("UpdateHistorico",MeasureDelay);
+        Invoke("UpdateHistorico", MeasureDelay);
     }
 
     void OnApplicationQuit()
@@ -127,23 +131,25 @@ public class SaveHandler : MonoBehaviour
 
     }
 
-    void UpdateHistorico()
+    public void UpdateHistorico()
     {
-        Population.Generation currentGenCriaturas = GetCurrentGenerationMedians(ParentCriaturas);
-        Population.Generation currentGenPredadores= GetCurrentGenerationMedians(ParentPredadores);
         
-        AddToJson(currentGenCriaturas, currentGenPredadores);
-        
-        if (currentGenCriaturas.Quantidade == 0 && currentGenPredadores.Quantidade == 0 )
-        {
-            Invoke("Restart", 60);
-            SetBestHistorico();
-        }
-        else
-            Invoke("UpdateHistorico", MeasureDelay);
+            Population.Generation currentGenCriaturas = GetCurrentGenerationMedians(ParentCriaturas);
+            Population.Generation currentGenPredadores = GetCurrentGenerationMedians(ParentPredadores);
+            lastUpdatedTime = lastUpdatedTime + MeasureDelay;
+            AddToJson(currentGenCriaturas, currentGenPredadores);
+
+            if( manager.DeveReiniciar(currentGenCriaturas.Quantidade, currentGenPredadores.Quantidade))
+            {
+                SetBestHistorico();
+            }
+            else{
+                Invoke("UpdateHistorico", MeasureDelay);
+            }
+
     }
     
-    Population.Generation GetCurrentGenerationMedians(Transform Parent)
+    public Population.Generation GetCurrentGenerationMedians(Transform Parent)
     {
         Criatura[] criaturas = Parent.GetComponentsInChildren<Criatura>();
         int velocidade = 0, visao = 0, vontadeDeAcasalamento = 0, inteligencia = 0, saude = 0, R = 0, G = 0,B=0 ;
@@ -210,9 +216,5 @@ public class SaveHandler : MonoBehaviour
         return pop.listaCriaturas.Count;
     }
 
-    void Restart()
-    {
-        Debug.Log("Reiniciando...");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
+   
 }

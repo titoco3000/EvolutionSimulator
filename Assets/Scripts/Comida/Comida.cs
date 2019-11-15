@@ -8,6 +8,8 @@ public class Comida : MonoBehaviour
 
     private float FadeRate = .04f;
 
+    public int valorNutricional = 300;
+
     public virtual void Comer(Criatura cliente)
     {
         if (!Comido)

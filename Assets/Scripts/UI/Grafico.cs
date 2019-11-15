@@ -43,7 +43,7 @@ public class Grafico : MonoBehaviour
     }
 
 
-    public void SetGraph(string title, List<float> valoresCriatura, List<float> valoresPredador, int escala)
+    public void SetGraph(string title, List<float> valoresCriatura, List<float> valoresPredador, float escala)
     {
         //determina o maior número e se deve arredondar
         List<float> valores = new List<float>();
@@ -54,7 +54,7 @@ public class Grafico : MonoBehaviour
         SetGraph(title, valoresCriatura, valoresPredador, escala, max);
     }
 
-    public void SetGraph(string title, List<float> valoresCriatura, List<float> valoresPredador, int escala, int max)
+    public void SetGraph(string title, List<float> valoresCriatura, List<float> valoresPredador, float escala, int max)
     {
         ClearGraph();
         //Coloca o título no lugar
@@ -101,7 +101,7 @@ public class Grafico : MonoBehaviour
         }
     }
 
-    public void SetGraph(string title, List<Color> cores, int escala)
+    public void SetGraph(string title, List<Color> coresCriatura, List<Color> coresPredador, float escala)
     {
         ClearGraph();
         //Coloca o título no lugar
@@ -109,14 +109,15 @@ public class Grafico : MonoBehaviour
 
         //coloca a legenda da escala
         textoEscala.text = "(" + GetTimeScale(escala) + ")";
-        textoTempoTotal.text = GetTimeScale(cores.Count * escala);
+        textoTempoTotal.text = GetTimeScale(coresCriatura.Count * escala);
 
 
         //Primeiro resume a lista, para ter apenas 8 items
-        cores = ResumeTo(cores, 8);
+        coresCriatura = ResumeTo(coresCriatura, 8); 
+        coresPredador = ResumeTo(coresPredador, 8);
 
         //depois coloca seu valor final
-        gradient.SetImage(cores.ToArray());
+        gradient.SetImages(coresCriatura.ToArray(), coresPredador.ToArray());
 
 
     }
@@ -217,14 +218,14 @@ public class Grafico : MonoBehaviour
 
         return n;
     }
-    private string GetTimeScale(int medida)
+    private string GetTimeScale(float medida)
     {
-        int segundos = medida % 60;
-        int minutosBruto = medida / 60;
-        int minutos = minutosBruto % 60;
-        int horasBruto = minutosBruto / 60;
-        int horas = horasBruto % 24;
-        int diasBruto = horasBruto / 24;
+        int segundos = (int)medida % 60;
+        int minutosBruto = (int)medida / 60;
+        int minutos = (int)minutosBruto % 60;
+        int horasBruto = (int)minutosBruto / 60;
+        int horas = (int)horasBruto % 24;
+        int diasBruto = (int)horasBruto / 24;
 
         return
             (diasBruto != 0 ? diasBruto.ToString() + "dias" : "") +

@@ -6,10 +6,22 @@ public class GradientGraph : MonoBehaviour
 {
     public Color[] listaDeCores;
 
+    public Image TextureOne;
+    public Image TextureTwo;
+
+
+
     public void SetImage(Color[] cores)
     {
         listaDeCores = cores;
         GradientTotexture(GetComponent<Image>().sprite.texture, SetGradient(cores));
+
+    }
+
+    public void SetImages(Color[] cores1, Color[] cores2)
+    {
+        GradientTotexture(TextureOne.sprite.texture, SetGradient(cores1));
+        GradientTotexture(TextureTwo.sprite.texture, SetGradient(cores2));
 
     }
 

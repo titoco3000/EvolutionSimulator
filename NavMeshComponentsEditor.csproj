@@ -63,13 +63,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\NavMeshComponents-master - 1\NavMeshComponents-master\Assets\NavMeshComponents\Editor\NavMeshAssetManager.cs" />
-    <Compile Include="Assets\NavMeshComponents-master - 1\NavMeshComponents-master\Assets\NavMeshComponents\Editor\NavMeshComponentsGUIUtility.cs" />
-    <Compile Include="Assets\NavMeshComponents-master - 1\NavMeshComponents-master\Assets\NavMeshComponents\Editor\NavMeshLinkEditor.cs" />
-    <Compile Include="Assets\NavMeshComponents-master - 1\NavMeshComponents-master\Assets\NavMeshComponents\Editor\NavMeshModifierEditor.cs" />
-    <Compile Include="Assets\NavMeshComponents-master - 1\NavMeshComponents-master\Assets\NavMeshComponents\Editor\NavMeshModifierVolumeEditor.cs" />
-    <Compile Include="Assets\NavMeshComponents-master - 1\NavMeshComponents-master\Assets\NavMeshComponents\Editor\NavMeshSurfaceEditor.cs" />
-    <None Include="Assets\NavMeshComponents-master - 1\NavMeshComponents-master\Assets\NavMeshComponents\Editor\NavMeshComponentsEditor.asmdef" />
+    <Compile Include="Assets\External\NavMeshComponents-master - 1\NavMeshComponents-master\Assets\NavMeshComponents\Editor\NavMeshAssetManager.cs" />
+    <Compile Include="Assets\External\NavMeshComponents-master - 1\NavMeshComponents-master\Assets\NavMeshComponents\Editor\NavMeshComponentsGUIUtility.cs" />
+    <Compile Include="Assets\External\NavMeshComponents-master - 1\NavMeshComponents-master\Assets\NavMeshComponents\Editor\NavMeshLinkEditor.cs" />
+    <Compile Include="Assets\External\NavMeshComponents-master - 1\NavMeshComponents-master\Assets\NavMeshComponents\Editor\NavMeshModifierEditor.cs" />
+    <Compile Include="Assets\External\NavMeshComponents-master - 1\NavMeshComponents-master\Assets\NavMeshComponents\Editor\NavMeshModifierVolumeEditor.cs" />
+    <Compile Include="Assets\External\NavMeshComponents-master - 1\NavMeshComponents-master\Assets\NavMeshComponents\Editor\NavMeshSurfaceEditor.cs" />
+    <None Include="Assets\External\NavMeshComponents-master - 1\NavMeshComponents-master\Assets\NavMeshComponents\Editor\NavMeshComponentsEditor.asmdef" />
     <Reference Include="UnityEditor.UI">
       <HintPath>D:/User/Documents/Dev/Unity Projects/EvolutionSimulator/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
